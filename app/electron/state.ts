@@ -11,6 +11,8 @@ class StateManager {
   private action: PetAction = 'idle'
   private prevAction: PetAction = 'idle'
   private tempTimer: NodeJS.Timeout | null = null
+  private selectedKey = ''
+  private selectedFile: string | null = null
 
   subscribe(fn: StateListener): () => void {
     this.listeners.push(fn)
@@ -23,7 +25,8 @@ class StateManager {
     const s = settingsStore.get()
     const role = resolveRole(s.roleId)
     const action = this.currentAction(s)
-    const file = role.actions[action]
+    const pool = role.actions[action] || role.actions.idle || []
+    const file = this.pickFile(`${role.id}:${action}:${pool.join('|')}`, pool)
     const image =
       role.folder && file ? toPetFileUrl(path.join(role.folder, file)) : null
     return {
@@ -46,6 +49,7 @@ class StateManager {
   setAction(a: PetAction) {
     if (this.action === a && !this.tempTimer) return
     this.action = a
+    this.selectedKey = ''
     this.emit()
   }
 
@@ -53,13 +57,25 @@ class StateManager {
   setTemporary(a: PetAction, ms: number) {
     this.prevAction = this.action
     this.action = a
+    this.selectedKey = ''
     if (this.tempTimer) clearTimeout(this.tempTimer)
     this.tempTimer = setTimeout(() => {
       this.tempTimer = null
       this.action = this.prevAction
+      this.selectedKey = ''
       this.emit()
     }, ms)
     this.emit()
+  }
+
+  private pickFile(key: string, pool: string[]): string | null {
+    if (!pool.length) return null
+    if (this.selectedKey === key && this.selectedFile && pool.includes(this.selectedFile)) {
+      return this.selectedFile
+    }
+    this.selectedKey = key
+    this.selectedFile = pool[Math.floor(Math.random() * pool.length)]
+    return this.selectedFile
   }
 
   emit() {

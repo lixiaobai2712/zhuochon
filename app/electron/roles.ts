@@ -45,7 +45,7 @@ function buildRole(dir: string, idFallback: string, nameFallback: string): RoleI
   const cfgPath = path.join(dir, 'pet.config.json')
   let id = idFallback
   let name = nameFallback
-  let actionsMap: Partial<Record<PetAction, string>> = {}
+  let actionsMap: Partial<Record<PetAction, string | string[]>> = {}
 
   if (fs.existsSync(cfgPath)) {
     try {
@@ -59,12 +59,17 @@ function buildRole(dir: string, idFallback: string, nameFallback: string): RoleI
   }
 
   const images = listImages(dir)
-  const actions: Partial<Record<PetAction, string>> = {}
+  const actions: Partial<Record<PetAction, string[]>> = {}
 
   for (const act of ALL_ACTIONS) {
     const configured = actionsMap[act]
-    if (configured && images.includes(configured)) {
-      actions[act] = configured
+    const configuredFiles = Array.isArray(configured)
+      ? configured.filter((f) => images.includes(f))
+      : configured && images.includes(configured)
+        ? [configured]
+        : []
+    if (configuredFiles.length) {
+      actions[act] = configuredFiles
       continue
     }
     const kws = [...(KEYWORDS[act] || []), act]
@@ -73,14 +78,14 @@ function buildRole(dir: string, idFallback: string, nameFallback: string): RoleI
     )
     if (cands.length) {
       if (ANIMATED.includes(act)) {
-        const gif = cands.find((f) => path.extname(f).toLowerCase() === '.gif')
-        actions[act] = gif || cands[0]
+        const gifs = cands.filter((f) => path.extname(f).toLowerCase() === '.gif')
+        actions[act] = gifs.length ? gifs : cands
       } else {
-        actions[act] = cands[0]
+        actions[act] = cands
       }
       continue
     }
-    // 缺少该动作时回退到 idle
+    // 缺少该动作时回退到 idle 卡池
     if (actions.idle) actions[act] = actions.idle
   }
 

@@ -39,8 +39,8 @@ export interface RoleInfo {
   id: string
   name: string
   folder: string
-  /** action -> 文件名 */
-  actions: Partial<Record<PetAction, string>>
+  /** action -> 文件名卡池 */
+  actions: Partial<Record<PetAction, string[]>>
 }
 
 export interface GalleryResult {

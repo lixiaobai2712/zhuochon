@@ -2,13 +2,54 @@
   "id": "custom-1",
   "name": "自定义1",
   "actions": {
-    "idle": "思考1.jpeg",
-    "codex-working": "开始执行4.gif",
-    "claude-working": "开始执行2.gif",
-    "sleep": "等待输入.jpeg",
-    "click": "思考2.jpeg",
-    "confirm-option": "确认选项1.jpeg",
-    "success": "任务完成1.jpg",
-    "error": "失败.png"
+    "idle": [
+      "思考1.jpeg",
+      "思考2.jpeg",
+      "思考3.jpeg",
+      "思考4.jpeg",
+      "思考5.gif",
+      "思考6.jpeg",
+      "等待输入.jpeg"
+    ],
+    "codex-working": [
+      "开始执行2.gif",
+      "开始执行3.gif",
+      "开始执行4.gif",
+      "开始执行5.gif",
+      "开始执行6.gif"
+    ],
+    "claude-working": [
+      "开始执行2.gif",
+      "开始执行3.gif",
+      "开始执行4.gif",
+      "开始执行5.gif",
+      "开始执行6.gif"
+    ],
+    "sleep": [
+      "等待输入.jpeg"
+    ],
+    "click": [
+      "思考1.jpeg",
+      "思考2.jpeg",
+      "思考3.jpeg",
+      "思考开始1.png",
+      "思考结束1.jpg"
+    ],
+    "confirm-option": [
+      "确认选项1.jpeg"
+    ],
+    "success": [
+      "任务完成.2.jpeg",
+      "任务完成.3.jpeg",
+      "任务完成1.jpg",
+      "任务完成4.jpg",
+      "任务完成5.png"
+    ],
+    "error": [
+      "失败.png",
+      "失败1.jpeg",
+      "失败3.webp",
+      "失败4.jpg"
+    ]
   }
 }

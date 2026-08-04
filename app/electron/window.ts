@@ -4,9 +4,11 @@ import { settingsStore } from './settings'
 import { setPetWindowGetter } from './broadcast'
 
 const BASE = 220
+const TOOLBAR_SPACE = 34
 
 export function petWindowSize(scale: number) {
-  return { width: Math.round(BASE * scale), height: Math.round(BASE * scale) }
+  const pet = Math.round(BASE * scale)
+  return { width: pet + TOOLBAR_SPACE, height: pet }
 }
 
 let petWin: BrowserWindow | null = null

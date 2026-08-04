@@ -14,10 +14,10 @@ export default function HoverToolbar() {
   if (!settings) return null
 
   const items: { key: keyof Settings; icon: string; title: string }[] = [
-    { key: 'alwaysOnTop', icon: settings.alwaysOnTop ? '📌' : '🧷', title: '置顶' },
-    { key: 'draggable', icon: settings.draggable ? '✋' : '🚫', title: '拖拽' },
-    { key: 'speechBubble', icon: settings.speechBubble ? '💬' : '🔇', title: '气泡' },
-    { key: 'autoDetectActivity', icon: settings.autoDetectActivity ? '🕵️' : '💤', title: '自动检测' },
+    { key: 'alwaysOnTop', icon: settings.alwaysOnTop ? 'T' : 't', title: '置顶' },
+    { key: 'draggable', icon: settings.draggable ? 'D' : 'd', title: '拖拽' },
+    { key: 'speechBubble', icon: settings.speechBubble ? 'B' : 'b', title: '气泡' },
+    { key: 'autoDetectActivity', icon: settings.autoDetectActivity ? 'A' : 'a', title: '自动检测' },
   ]
 
   return (
@@ -45,10 +45,10 @@ export default function HoverToolbar() {
         +
       </button>
       <button title="随机美图" onClick={() => window.api.galleryRequest()}>
-        🖼️
+        G
       </button>
       <button title="退出" onClick={() => window.api.quit()}>
-        ⏻
+        Q
       </button>
     </div>
   )

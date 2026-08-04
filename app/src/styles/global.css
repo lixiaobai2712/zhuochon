@@ -27,6 +27,12 @@ body {
   background: transparent;
 }
 
+.pet-stage {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
 .pet-image {
   width: 100%;
   height: 100%;
@@ -76,32 +82,39 @@ body {
 /* ---------- 悬浮工具条 ---------- */
 .hover-toolbar {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
   right: 0;
+  transform: translateY(-50%);
   display: flex;
-  gap: 2px;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
   justify-content: center;
-  padding: 3px;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 0 0 10px 10px;
+  width: 32px;
+  padding: 4px 3px;
+  background: rgba(22, 24, 31, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
   z-index: 30;
 }
 
 .hover-toolbar button {
-  width: 26px;
-  height: 26px;
-  font-size: 14px;
+  width: 24px;
+  height: 22px;
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1;
-  border: none;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.86);
+  color: #222;
+  border-radius: 6px;
   cursor: pointer;
 }
 
 .hover-toolbar button:hover {
   background: #fff;
-  transform: scale(1.08);
+  border-color: rgba(255, 255, 255, 0.88);
 }
 
 /* ---------- 随机美图 ---------- */

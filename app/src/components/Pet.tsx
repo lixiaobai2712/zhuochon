@@ -31,6 +31,7 @@ export default function Pet() {
 
   const scale = settings?.scale ?? 1
   const size = 220 * scale
+  const toolbarSpace = 34
   const draggable = settings?.draggable !== false
 
   useEffect(
@@ -106,19 +107,21 @@ export default function Pet() {
   return (
     <div
       className="pet"
-      style={{ width: size, height: size }}
+      style={{ width: size + toolbarSpace, height: size }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onPointerDown={onPointerDown}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
     >
-      {state?.image ? (
-        <img className="pet-image" src={state.image} draggable={false} alt="" />
-      ) : (
-        <div className="pet-fallback">🐱</div>
-      )}
-      {bubble && settings?.speechBubble !== false && <Bubble text={bubble.text} key={bubble.key} />}
+      <div className="pet-stage" style={{ width: size, height: size }}>
+        {state?.image ? (
+          <img className="pet-image" src={state.image} draggable={false} alt="" />
+        ) : (
+          <div className="pet-fallback">?</div>
+        )}
+        {bubble && settings?.speechBubble !== false && <Bubble text={bubble.text} key={bubble.key} />}
+      </div>
       {hover && <HoverToolbar />}
     </div>
   )
