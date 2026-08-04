@@ -1,0 +1,13 @@
+{
+  "id": "custom-1",
+  "name": "自定义1",
+  "actions": {
+    "idle": "思考1.jpeg",
+    "codex-working": "开始执行4.gif",
+    "claude-working": "开始执行2.gif",
+    "sleep": "等待输入.jpeg",
+    "click": "思考2.jpeg",
+    "success": "任务完成1.jpg",
+    "error": "失败.png"
+  }
+}
