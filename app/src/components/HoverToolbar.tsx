@@ -1,6 +1,14 @@
 import { useSettings } from '../hooks/useSettings'
 import type { Settings } from '../../shared/types'
 
+const MIN_SCALE = 0.5
+const MAX_SCALE = 2.5
+const SCALE_STEP = 0.1
+
+function clampScale(value: number) {
+  return Math.min(MAX_SCALE, Math.max(MIN_SCALE, Number(value.toFixed(2))))
+}
+
 export default function HoverToolbar() {
   const { settings, update } = useSettings()
   if (!settings) return null
@@ -27,6 +35,15 @@ export default function HoverToolbar() {
           {it.icon}
         </button>
       ))}
+      <button title="缩小" onClick={() => update({ scale: clampScale(settings.scale - SCALE_STEP) })}>
+        -
+      </button>
+      <button title="恢复默认大小" onClick={() => update({ scale: 1 })}>
+        1:1
+      </button>
+      <button title="放大" onClick={() => update({ scale: clampScale(settings.scale + SCALE_STEP) })}>
+        +
+      </button>
       <button title="随机美图" onClick={() => window.api.galleryRequest()}>
         🖼️
       </button>

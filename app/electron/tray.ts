@@ -16,6 +16,14 @@ const ACTIONS: { value: PetAction; label: string }[] = [
   { value: 'error', label: '失败' },
 ]
 
+const SCALE_OPTIONS = [
+  { value: 0.8, label: '80%' },
+  { value: 1, label: '100%' },
+  { value: 1.25, label: '125%' },
+  { value: 1.5, label: '150%' },
+  { value: 2, label: '200%' },
+]
+
 let tray: Tray | null = null
 let applySettings: () => void = () => {}
 
@@ -97,6 +105,18 @@ export function refreshTray() {
       ],
     },
     { type: 'separator' },
+    {
+      label: '大小',
+      submenu: SCALE_OPTIONS.map((o) => ({
+        label: o.label,
+        type: 'checkbox' as const,
+        checked: Math.abs(s.scale - o.value) < 0.01,
+        click: () => {
+          settingsStore.update({ scale: o.value })
+          applySettings()
+        },
+      })),
+    },
     { label: '置顶', type: 'checkbox' as const, checked: s.alwaysOnTop, click: (i) => toggle('alwaysOnTop', i.checked) },
     { label: '可拖拽', type: 'checkbox' as const, checked: s.draggable, click: (i) => toggle('draggable', i.checked) },
     { label: '点击互动', type: 'checkbox' as const, checked: s.clickInteraction, click: (i) => toggle('clickInteraction', i.checked) },
