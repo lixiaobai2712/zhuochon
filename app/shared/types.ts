@@ -5,6 +5,7 @@ export type PetAction =
   | 'claude-working'
   | 'sleep'
   | 'click'
+  | 'confirm-option'
   | 'success'
   | 'error'
 

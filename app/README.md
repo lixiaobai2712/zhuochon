@@ -51,7 +51,22 @@ npm run build
 npm start   # 在构建后直接运行
 ```
 
-> 当前版本未配置 electron-builder 安装包打包。如需发布 .exe 安装包，可以后续补充 `electron-builder`。
+## 如何生成 exe
+
+```powershell
+cd "D:\Desktop\个人项目\桌宠\app"
+$env:ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
+$env:ELECTRON_BUILDER_BINARIES_MIRROR="https://npmmirror.com/mirrors/electron-builder-binaries/"
+npm.cmd run dist
+```
+
+生成结果在项目根目录的 `release/`：
+
+- `桌面小宠 Setup 0.1.0.exe`：安装版
+- `桌面小宠 0.1.0.exe`：便携版
+- `win-unpacked/桌面小宠.exe`：解压目录版，运行时需要保留同目录下的 DLL 和 `resources`
+
+当前为了避免 Windows 解压 `winCodeSign` 符号链接权限问题，打包配置关闭了 `signAndEditExecutable`。这不影响运行，只是 exe 的签名/资源信息不会精修。
 
 ## 角色系统
 
@@ -85,11 +100,14 @@ npm start   # 在构建后直接运行
     "claude-working": "开始执行2.gif",
     "sleep": "等待输入.jpeg",
     "click": "思考2.jpeg",
+    "confirm-option": "确认选项1.jpeg",
     "success": "任务完成1.jpg",
     "error": "失败.png"
   }
 }
 ```
+
+`confirm-option` 用于“等待确认 / 权限 / 选项确认”场景。托盘菜单的「手动状态」里可以直接切换到这个动作。
 
 ### 动作图命名规则（无配置时自动匹配）
 

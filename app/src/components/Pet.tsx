@@ -12,6 +12,7 @@ const MESSAGES: Record<PetAction, string[]> = {
   idle: ['我在呢~', '陪你摸鱼中…', '要干点啥吗？', '今天也是元气满满！'],
   'codex-working': ['Codex 正在干活，稍等一下~', '任务执行中…', '代码马上好！'],
   'claude-working': ['Claude 正在写代码…', '稍等，我在琢磨…'],
+  'confirm-option': ['需要你确认一下~', '有个选项等你拍板', '权限请求来了'],
   sleep: ['zzz…', '我先睡会儿…', '有事戳我一下哦'],
   click: ['嘿嘿，干嘛戳我呀', '我在呢！', '痒痒的~'],
   success: ['任务完成啦！', '搞定！', '漂亮！'],

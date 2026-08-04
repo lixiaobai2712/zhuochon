@@ -78,7 +78,25 @@ const TERMINAL_NAMES = [
   'tabby',
 ]
 
-export type DetectedSource = 'claude' | 'codex' | null
+export type DetectedSource = 'claude' | 'codex' | 'confirm-option' | null
+
+const CONFIRM_KEYWORDS = [
+  'confirm',
+  'confirmation',
+  'permission',
+  'approval',
+  'approve',
+  'allow',
+  'choice',
+  'option',
+  'select',
+  '确认',
+  '权限',
+  '批准',
+  '允许',
+  '选择',
+  '选项',
+]
 
 export async function detectActivity(): Promise<DetectedSource> {
   try {
@@ -91,6 +109,8 @@ export async function detectActivity(): Promise<DetectedSource> {
     const isTerminal =
       TERMINAL_NAMES.some((s) => proc.includes(s)) ||
       ['windowsterminal', 'cmd', 'powershell', 'conhost'].some((s) => title.includes(s))
+
+    if (CONFIRM_KEYWORDS.some((k) => title.includes(k))) return 'confirm-option'
 
     // Claude：前台标题含 claude，或前台是终端且存在 claude 进程
     if (title.includes('claude')) return 'claude'
@@ -134,7 +154,10 @@ export class ActivityWatcher {
     if (!s.autoDetectActivity || s.manualState !== 'auto') return
 
     const det = await detectActivity()
-    if (det === 'claude') {
+    if (det === 'confirm-option') {
+      this.lastActive = Date.now()
+      stateManager.setAction('confirm-option')
+    } else if (det === 'claude') {
       this.lastActive = Date.now()
       stateManager.setAction('claude-working')
     } else if (det === 'codex') {

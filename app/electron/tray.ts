@@ -10,6 +10,7 @@ const ACTIONS: { value: PetAction; label: string }[] = [
   { value: 'idle', label: '待机' },
   { value: 'codex-working', label: 'Codex 工作中' },
   { value: 'claude-working', label: 'Claude 工作中' },
+  { value: 'confirm-option', label: '等待确认 / 权限' },
   { value: 'sleep', label: '睡眠' },
   { value: 'success', label: '任务完成' },
   { value: 'error', label: '失败' },

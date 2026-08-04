@@ -18,7 +18,8 @@ function firstExisting(...cands: string[]): string | null {
  */
 export function getPaths() {
   const appRoot = app.getAppPath()
-  const projectRoot = process.env.PET_ROOT || path.resolve(appRoot, '..')
+  const projectRoot =
+    process.env.PET_ROOT || (app.isPackaged ? process.resourcesPath : path.resolve(appRoot, '..'))
 
   const roleRoots =
     process.env.PET_ROLES

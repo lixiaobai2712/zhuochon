@@ -9,6 +9,7 @@ export const ALL_ACTIONS: PetAction[] = [
   'claude-working',
   'sleep',
   'click',
+  'confirm-option',
   'success',
   'error',
 ]
@@ -22,6 +23,7 @@ const KEYWORDS: Record<PetAction, string[]> = {
   'claude-working': ['claude', 'working', '开始执行', '执行'],
   sleep: ['sleep', '睡觉', 'zzz', '睡眠'],
   click: ['click', '点击', 'touch', '触摸'],
+  'confirm-option': ['confirm', 'permission', 'approval', 'option', '确认', '权限', '选项'],
   success: ['success', '完成', 'done', 'ok', '成功'],
   error: ['error', '失败', 'fail', '错误'],
 }
