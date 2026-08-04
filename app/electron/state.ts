@@ -36,9 +36,10 @@ class StateManager {
     }
   }
 
-  /** 手动状态优先；否则取自动检测的结果 */
+  /** 手动状态优先；否则关闭自动检测时回落到 idle；再否则取自动检测的结果 */
   currentAction(s: Settings = settingsStore.get()): PetAction {
     if (s.manualState !== 'auto') return s.manualState
+    if (!s.autoDetectActivity) return 'idle'
     return this.action
   }
 

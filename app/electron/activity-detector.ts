@@ -130,8 +130,8 @@ export class ActivityWatcher {
 
   private async tick() {
     const s = settingsStore.get()
-    // 手动状态或关闭自动检测时，不干预
-    if (s.manualState !== 'auto') return
+    // 关闭自动检测，或处于手动状态时，不干预
+    if (!s.autoDetectActivity || s.manualState !== 'auto') return
 
     const det = await detectActivity()
     if (det === 'claude') {

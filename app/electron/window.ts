@@ -10,6 +10,12 @@ export function petWindowSize(scale: number) {
 }
 
 let petWin: BrowserWindow | null = null
+// 真正退出程序时置 true，放行窗口关闭；否则拦截 close 改为隐藏到托盘
+let quitting = false
+
+export function setQuitting(v: boolean) {
+  quitting = v
+}
 
 export function getPetWindow() {
   return petWin
@@ -62,6 +68,14 @@ export function createPetWindow(): BrowserWindow {
   }
 
   petWin.once('ready-to-show', () => petWin?.show())
+
+  // Alt+F4 / 系统关闭窗口时，默认隐藏到托盘而不是销毁
+  petWin.on('close', (e) => {
+    if (!quitting) {
+      e.preventDefault()
+      petWin?.hide()
+    }
+  })
 
   let lastSave = 0
   petWin.on('moved', () => {

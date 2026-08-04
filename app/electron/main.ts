@@ -1,7 +1,7 @@
 import { app, ipcMain, protocol } from 'electron'
 import { registerPetFileProtocol } from './protocol'
 import { settingsStore } from './settings'
-import { createPetWindow, getPetWindow, applyPetWindowSettings } from './window'
+import { createPetWindow, getPetWindow, applyPetWindowSettings, setQuitting } from './window'
 import { initTray, destroyTray, hasTray, refreshTray } from './tray'
 import { stateManager } from './state'
 import { activityWatcher } from './activity-detector'
@@ -23,6 +23,9 @@ function applySettings() {
   const s = settingsStore.get()
 
   applyPetWindowSettings(s)
+
+  // 重新开启自动检测时重置睡眠计时，避免一开就立刻进入 sleep
+  if (s.autoDetectActivity) activityWatcher.poke()
 
   if (s.tray && !hasTray()) initTray({ applySettings })
   else if (!s.tray && hasTray()) destroyTray()
@@ -110,6 +113,7 @@ if (!gotLock) {
   })
 
   app.on('before-quit', () => {
+    setQuitting(true)
     activityWatcher.stop()
   })
 
