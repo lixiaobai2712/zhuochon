@@ -14,13 +14,16 @@ const MIME: Record<string, string> = {
 }
 
 export function toPetFileUrl(absPath: string): string {
-  return 'petfile://' + absPath.replace(/\\/g, '/')
+  return `petfile://asset/${encodeURIComponent(path.resolve(absPath))}`
 }
 
 function resolveFromUrl(url: string): string | null {
   try {
     const u = new URL(url)
-    const p = path.normalize(decodeURIComponent(u.host + u.pathname))
+    const p =
+      u.hostname === 'asset'
+        ? path.normalize(decodeURIComponent(u.pathname.slice(1)))
+        : path.normalize(decodeURIComponent(u.host + u.pathname))
     const { roleRoots, galleryRoot } = getPaths()
     const np = path.resolve(p).toLowerCase()
     const roots = [...roleRoots, galleryRoot].map((r) => path.resolve(r).toLowerCase())
